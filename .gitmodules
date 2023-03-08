@@ -1,0 +1,6 @@
+[submodule "api"]
+	path = api
+	url = https://github.com/NAT1804/realtime-chat-api
+[submodule "fe"]
+	path = fe
+	url = https://github.com/NAT1804/realtime-chat-ui

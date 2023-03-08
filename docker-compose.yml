@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  api: 
+    build:
+      dockerfile: Dockerfile
+      context: ./api
+      # Only build development stage from Dockerfile
+      target: development
+
+      # Mount our host dir to the docker container
+      # Mount api directory (./api) to (:) docker container (/workspace/api/src/app)
+      # Reflect file changes from host to container
+      volumes:
+        - ./api:/workspace/api/src/app
+        - ./workspace/api/src/app/node_modules
+
+      # RUN in debug mode: yarn start:debug --> Also start your vscode debugger
+      # RUN in dev mode: yarn start:dev  
+      command: yarn start:dev
+      environment:
+        NODE_ENV: development
+        PORT: 3000
+      ports:
+        - 3000:3000
+        - 9229:9229
+  fe:
+    build:
+      dockerfile: Dockerfile
+      context: ./fe
+      
+    command: yarn start
+    volumes:
+      - ./fe:/workspace/fe/src/app
+      - ./workspace/fe/src/app/node_modules
+    ports: 
+      - 4200:4200
+
